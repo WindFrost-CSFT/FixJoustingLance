@@ -16,6 +16,14 @@ public class Plugin(Main game) : TerrariaPlugin(game)
     public override void Initialize()
     {
         Mount.CanDismount += MountOnCanDismount;
+        Mount.CanDismountWithResult += Mount_CanDismountWithResult;
+    }
+
+    private Terraria.Mount.DismountCheckResult Mount_CanDismountWithResult(Mount.orig_CanDismountWithResult orig, Terraria.Mount self, Player mountingPlayer)
+    {
+        if (self.Type != -1)
+            return Terraria.Mount.DismountCheckResult.FailedCCed;
+        return orig(self, mountingPlayer);
     }
 
     private static bool MountOnCanDismount(Mount.orig_CanDismount orig, Terraria.Mount self, Player mountingPlayer)
@@ -29,6 +37,7 @@ public class Plugin(Main game) : TerrariaPlugin(game)
         if (disposing)
         {
             Mount.CanDismount -= MountOnCanDismount;
+            Mount.CanDismountWithResult -= Mount_CanDismountWithResult;
         }
     }
 }
