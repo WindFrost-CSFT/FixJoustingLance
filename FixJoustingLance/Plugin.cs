@@ -21,7 +21,7 @@ public class Plugin(Main game) : TerrariaPlugin(game)
 
     private Terraria.Mount.DismountCheckResult Mount_CanDismountWithResult(Mount.orig_CanDismountWithResult orig, Terraria.Mount self, Player mountingPlayer)
     {
-        if (self.Type != -1)
+        if (self.Type == -1)
             return Terraria.Mount.DismountCheckResult.FailedCCed;
         return orig(self, mountingPlayer);
     }
